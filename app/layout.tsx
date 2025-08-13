@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "heatmaps.fun - Heatmaps & Track Your Data",
+  title: "heatmaps.fun",
   description:
     "Free heatmap creator tool. Make custom heatmaps, track daily habits, visualize data patterns. Create beautiful GitHub-style contribution graphs with multiple themes.",
   keywords:
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   publisher: "heatmaps.fun",
   robots: "index, follow",
   openGraph: {
-    title: "heatmaps.fun - Heatmaps & Track Your Data",
+    title: "heatmaps.fun",
     description:
       "Free heatmap creator tool. Make custom heatmaps, track daily habits, visualize data patterns with beautiful themes.",
     url: "https://heatmaps.fun",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "heatmaps.fun - Heatmaps & Track Your Data",
+    title: "heatmaps.fun",
     description: "Free heatmap creator tool. Make custom heatmaps, track daily habits, visualize data patterns.",
     images: ["/og-image.png"],
   },
