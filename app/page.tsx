@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { HeatmapGrid } from "@/components/heatmap-grid"
-import { Plus, Edit2, Trash2 } from "lucide-react"
+import { Plus, Edit2, Trash2, Github } from "lucide-react"
 
 interface Heatmap {
   id: string
@@ -165,6 +165,23 @@ export default function HomePage() {
             </div>
           ))}
         </div>
+
+        {/* Footer */}
+        <footer className="text-center py-8 border-t border-gray-200 mt-12">
+          <div className="flex items-center justify-center gap-6 text-sm text-gray-600">
+            <a
+              href="https://github.com/RonTuretzky/heatmap.fun"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-gray-900 transition-colors"
+            >
+              <Github className="w-4 h-4" />
+              Contribute here!
+            </a>
+            <span className="text-gray-400">•</span>
+            <span>Open source • Local first • Privacy preserving</span>
+          </div>
+        </footer>
       </div>
     </div>
   )
