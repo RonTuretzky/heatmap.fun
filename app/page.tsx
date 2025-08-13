@@ -59,7 +59,7 @@ export default function HomePage() {
       }
       const updatedHeatmaps = [...heatmaps, newHeatmap]
       setHeatmaps(updatedHeatmaps)
-      saveHeatmapsToStorage(updatedHeatmaps) // Save to localStorage
+      saveHeatmapsToStorage(updatedHeatmaps)
       setNewHeatmapName("")
     }
   }
@@ -67,7 +67,7 @@ export default function HomePage() {
   const deleteHeatmap = (id: string) => {
     const updatedHeatmaps = heatmaps.filter((h) => h.id !== id)
     setHeatmaps(updatedHeatmaps)
-    saveHeatmapsToStorage(updatedHeatmaps) // Save to localStorage
+    saveHeatmapsToStorage(updatedHeatmaps)
   }
 
   const startEditing = (heatmap: Heatmap) => {
@@ -79,7 +79,7 @@ export default function HomePage() {
     if (editingName.trim()) {
       const updatedHeatmaps = heatmaps.map((h) => (h.id === editingId ? { ...h, title: editingName.trim() } : h))
       setHeatmaps(updatedHeatmaps)
-      saveHeatmapsToStorage(updatedHeatmaps) // Save to localStorage
+      saveHeatmapsToStorage(updatedHeatmaps)
     }
     setEditingId(null)
     setEditingName("")
@@ -93,10 +93,12 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-4xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">heatmaps.fun</h1>
-          <p className="text-gray-600">Track anything with beautiful heatmaps</p>
+        <div className="flex items-center justify-center">
+          <img
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/heatmaps-GwpNZnrXOkjPPIhZkEDQuQr47NiCQx.png"
+            alt="HEATMAPS.FUN"
+            className="h-20 object-contain"
+          />
         </div>
 
         {/* Add New Heatmap */}
