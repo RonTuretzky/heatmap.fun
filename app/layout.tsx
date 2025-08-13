@@ -25,6 +25,8 @@ export const metadata: Metadata = {
   creator: "heatmaps.fun",
   publisher: "heatmaps.fun",
   robots: "index, follow",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+  themeColor: "#10b981",
   openGraph: {
     title: "heatmaps.fun",
     description:
@@ -57,6 +59,14 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   generator: "v0.app",
+  other: {
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-title": "heatmaps.fun",
+    "mobile-web-app-capable": "yes",
+    "msapplication-TileColor": "#10b981",
+    "msapplication-tap-highlight": "no",
+  },
 }
 
 export default function RootLayout({

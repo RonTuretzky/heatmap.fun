@@ -1,7 +1,7 @@
 {
-  "name": "Heatmaps.fun",
-  "short_name": "Heatmaps",
-  "description": "Create custom heatmaps and track your data",
+  "name": "heatmaps.fun",
+  "short_name": "heatmaps.fun",
+  "description": "Create and track custom heatmaps",
   "icons": [
     {
       "src": "/favicon-16x16.png",
@@ -17,10 +17,37 @@
       "src": "/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
-  "theme_color": "#39d353",
-  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "background_color": "#0f172a",
   "display": "standalone",
-  "start_url": "/"
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Create Heatmap",
+      "short_name": "New Heatmap",
+      "description": "Create a new heatmap",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/apple-touch-icon.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
 }
