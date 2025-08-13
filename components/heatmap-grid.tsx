@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Plus, Minus } from "lucide-react"
+import { Plus, Minus, Settings, Palette } from "lucide-react"
 
 interface HeatmapGridProps {
   heatmapId: string
@@ -13,8 +13,35 @@ interface DayData {
   value: number
 }
 
+type Theme = "github" | "ocean" | "sunset" | "forest" | "purple"
+
+const themes = {
+  github: {
+    name: "GitHub",
+    colors: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+  },
+  ocean: {
+    name: "Ocean",
+    colors: ["#e0f2fe", "#1e3a8a", "#3b82f6", "#60a5fa", "#93c5fd"],
+  },
+  sunset: {
+    name: "Sunset",
+    colors: ["#fef3c7", "#9a3412", "#ea580c", "#fb923c", "#fed7aa"],
+  },
+  forest: {
+    name: "Forest",
+    colors: ["#14532d", "#166534", "#16a34a", "#4ade80", "#86efac"],
+  },
+  purple: {
+    name: "Purple",
+    colors: ["#f3e8ff", "#5b21b6", "#7c3aed", "#a855f7", "#c084fc"],
+  },
+}
+
 export function HeatmapGrid({ heatmapId }: HeatmapGridProps) {
   const [data, setData] = useState<DayData[]>([])
+  const [showSettings, setShowSettings] = useState(false)
+  const [theme, setTheme] = useState<Theme>("github")
 
   const saveToStorage = (heatmapData: DayData[]) => {
     if (typeof window !== "undefined") {
@@ -26,6 +53,34 @@ export function HeatmapGrid({ heatmapId }: HeatmapGridProps) {
         console.error("Error saving to localStorage:", error)
       }
     }
+  }
+
+  const saveThemeToStorage = (selectedTheme: Theme) => {
+    if (typeof window !== "undefined") {
+      const themeKey = `heatmap_theme_${heatmapId}`
+      try {
+        localStorage.setItem(themeKey, selectedTheme)
+        console.log("Saved theme to localStorage:", themeKey, selectedTheme)
+      } catch (error) {
+        console.error("Error saving theme to localStorage:", error)
+      }
+    }
+  }
+
+  const loadThemeFromStorage = (): Theme => {
+    if (typeof window !== "undefined") {
+      const themeKey = `heatmap_theme_${heatmapId}`
+      try {
+        const savedTheme = localStorage.getItem(themeKey) as Theme
+        if (savedTheme && themes[savedTheme]) {
+          console.log("Loaded theme from localStorage:", themeKey, savedTheme)
+          return savedTheme
+        }
+      } catch (error) {
+        console.error("Error loading theme from localStorage:", error)
+      }
+    }
+    return "github"
   }
 
   const loadFromStorage = (): DayData[] | null => {
@@ -49,6 +104,8 @@ export function HeatmapGrid({ heatmapId }: HeatmapGridProps) {
 
   useEffect(() => {
     const savedData = loadFromStorage()
+    const savedTheme = loadThemeFromStorage()
+    setTheme(savedTheme)
 
     if (savedData && savedData.length === 154) {
       setData(savedData)
@@ -97,12 +154,13 @@ export function HeatmapGrid({ heatmapId }: HeatmapGridProps) {
     updateTodayValue(getTodayValue() - 1)
   }
 
+  const handleThemeChange = (newTheme: Theme) => {
+    setTheme(newTheme)
+    saveThemeToStorage(newTheme)
+  }
+
   const getIntensityColor = (value: number) => {
-    if (value === 0) return "#161b22"
-    if (value === 1) return "#0e4429"
-    if (value === 2) return "#006d32"
-    if (value === 3) return "#26a641"
-    return "#39d353"
+    return themes[theme].colors[value] || themes[theme].colors[0]
   }
 
   const renderHeatmap = () => {
@@ -110,32 +168,39 @@ export function HeatmapGrid({ heatmapId }: HeatmapGridProps) {
     const gap = 2
 
     return (
-      <div className="flex" style={{ gap: `${gap}px` }}>
-        {Array.from({ length: 22 }, (_, colIndex) => (
-          <div key={colIndex} className="flex flex-col" style={{ gap: `${gap}px` }}>
-            {Array.from({ length: 7 }, (_, rowIndex) => {
-              const dayIndex = colIndex * 7 + rowIndex
-              const day = data[dayIndex]
-              if (!day) return null
+      <div
+        className="inline-block p-4 rounded-xl"
+        style={{
+          background: `linear-gradient(135deg, ${themes[theme].colors[0]}22, ${themes[theme].colors[1]}11)`,
+        }}
+      >
+        <div className="flex" style={{ gap: `${gap}px` }}>
+          {Array.from({ length: 22 }, (_, colIndex) => (
+            <div key={colIndex} className="flex flex-col" style={{ gap: `${gap}px` }}>
+              {Array.from({ length: 7 }, (_, rowIndex) => {
+                const dayIndex = colIndex * 7 + rowIndex
+                const day = data[dayIndex]
+                if (!day) return null
 
-              const isToday = day.date === getTodayDate()
+                const isToday = day.date === getTodayDate()
 
-              return (
-                <div
-                  key={day.date}
-                  className={`transition-all duration-200 ${isToday ? "ring-2 ring-blue-400" : ""}`}
-                  style={{
-                    width: `${squareSize}px`,
-                    height: `${squareSize}px`,
-                    backgroundColor: getIntensityColor(day.value),
-                    borderRadius: "2px",
-                  }}
-                  title={`${day.date}: ${day.value}${isToday ? " (Today)" : ""}`}
-                />
-              )
-            })}
-          </div>
-        ))}
+                return (
+                  <div
+                    key={day.date}
+                    className={`transition-all duration-200 ${isToday ? "ring-2 ring-blue-400" : ""}`}
+                    style={{
+                      width: `${squareSize}px`,
+                      height: `${squareSize}px`,
+                      backgroundColor: getIntensityColor(day.value),
+                      borderRadius: "4px",
+                    }}
+                    title={`${day.date}: ${day.value}${isToday ? " (Today)" : ""}`}
+                  />
+                )
+              })}
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
@@ -143,19 +208,59 @@ export function HeatmapGrid({ heatmapId }: HeatmapGridProps) {
   return (
     <div className="space-y-6">
       {/* Today's Controls */}
-      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-        <span className="text-sm font-medium text-gray-700">Today's value:</span>
-        <div className="flex items-center gap-2">
-          <Button size="sm" variant="outline" onClick={decrementToday} disabled={getTodayValue() <= 0}>
-            <Minus className="w-4 h-4" />
-          </Button>
-          <span className="w-8 text-center font-bold text-lg">{getTodayValue()}</span>
-          <Button size="sm" variant="outline" onClick={incrementToday} disabled={getTodayValue() >= 4}>
-            <Plus className="w-4 h-4" />
-          </Button>
+      <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
+        <div className="flex items-center gap-4">
+          <span className="text-sm font-medium text-gray-700">Today's value:</span>
+          <div className="flex items-center gap-2">
+            <Button size="sm" variant="outline" onClick={decrementToday} disabled={getTodayValue() <= 0}>
+              <Minus className="w-4 h-4" />
+            </Button>
+            <span className="w-8 text-center font-bold text-lg">{getTodayValue()}</span>
+            <Button size="sm" variant="outline" onClick={incrementToday} disabled={getTodayValue() >= 4}>
+              <Plus className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
-        <span className="text-xs text-gray-500">Use - and + to update today's block</span>
+
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => setShowSettings(!showSettings)}
+          className="flex items-center gap-2"
+        >
+          <Settings className="w-4 h-4" />
+          Settings
+        </Button>
       </div>
+
+      {showSettings && (
+        <div className="p-4 bg-white border rounded-lg shadow-sm">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Palette className="w-4 h-4" />
+              <span className="font-medium text-gray-700">Theme</span>
+            </div>
+            <div className="grid grid-cols-5 gap-2">
+              {Object.entries(themes).map(([key, themeData]) => (
+                <button
+                  key={key}
+                  onClick={() => handleThemeChange(key as Theme)}
+                  className={`p-2 rounded-lg border-2 transition-all ${
+                    theme === key ? "border-blue-500 bg-blue-50" : "border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  <div className="flex gap-1 mb-1">
+                    {themeData.colors.slice(1).map((color, index) => (
+                      <div key={index} className="w-3 h-3 rounded-sm" style={{ backgroundColor: color }} />
+                    ))}
+                  </div>
+                  <div className="text-xs font-medium text-gray-600">{themeData.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Heatmap */}
       <div className="flex justify-center">{renderHeatmap()}</div>

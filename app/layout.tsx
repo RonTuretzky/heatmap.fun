@@ -16,8 +16,46 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "Heatmaps.fun - Visualize Your Data Like Never Before",
-  description: "Transform complex datasets into stunning heatmaps. Track daily changes effortlessly.",
+  title: "Heatmaps.fun - Create Custom Heatmaps & Track Your Data",
+  description:
+    "Free heatmap creator tool. Make custom heatmaps, track daily habits, visualize data patterns. Create beautiful GitHub-style contribution graphs with multiple themes.",
+  keywords:
+    "heatmap creator, custom heatmaps, make heatmaps, data visualization, habit tracker, contribution graph, heatmap generator, track data, visual analytics",
+  authors: [{ name: "Heatmaps.fun" }],
+  creator: "Heatmaps.fun",
+  publisher: "Heatmaps.fun",
+  robots: "index, follow",
+  openGraph: {
+    title: "Heatmaps.fun - Create Custom Heatmaps & Track Your Data",
+    description:
+      "Free heatmap creator tool. Make custom heatmaps, track daily habits, visualize data patterns with beautiful themes.",
+    url: "https://heatmaps.fun",
+    siteName: "Heatmaps.fun",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Heatmaps.fun - Custom Heatmap Creator",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Heatmaps.fun - Create Custom Heatmaps & Track Your Data",
+    description: "Free heatmap creator tool. Make custom heatmaps, track daily habits, visualize data patterns.",
+    images: ["/og-image.png"],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  manifest: "/site.webmanifest",
   generator: "v0.app",
 }
 
@@ -28,6 +66,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${dmSans.variable} antialiased`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "Heatmaps.fun",
+              description: "Free heatmap creator tool for tracking data and creating custom visualizations",
+              url: "https://heatmaps.fun",
+              applicationCategory: "DataVisualization",
+              operatingSystem: "Web Browser",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+              },
+              featureList: [
+                "Custom heatmap creation",
+                "Multiple color themes",
+                "Data tracking",
+                "GitHub-style contribution graphs",
+                "Habit tracking",
+              ],
+            }),
+          }}
+        />
+      </head>
       <body className="font-sans">{children}</body>
     </html>
   )
