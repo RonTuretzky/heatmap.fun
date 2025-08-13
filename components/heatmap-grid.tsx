@@ -22,7 +22,7 @@ const themes = {
   },
   ocean: {
     name: "Ocean",
-    colors: ["#e0f2fe", "#1e3a8a", "#3b82f6", "#60a5fa", "#93c5fd"],
+    colors: ["#e0f2fe", "#bae6fd", "#7dd3fc", "#38bdf8", "#0ea5e9"],
   },
   sunset: {
     name: "Sunset",
@@ -34,7 +34,7 @@ const themes = {
   },
   purple: {
     name: "Purple",
-    colors: ["#f3e8ff", "#5b21b6", "#7c3aed", "#a855f7", "#c084fc"],
+    colors: ["#f3e8ff", "#e9d5ff", "#d8b4fe", "#c084fc", "#a855f7"],
   },
 }
 
