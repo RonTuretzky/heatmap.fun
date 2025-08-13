@@ -16,27 +16,27 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "Heatmaps.fun - Create Custom Heatmaps & Track Your Data",
+  title: "heatmaps.fun - Create Custom Heatmaps & Track Your Data",
   description:
     "Free heatmap creator tool. Make custom heatmaps, track daily habits, visualize data patterns. Create beautiful GitHub-style contribution graphs with multiple themes.",
   keywords:
     "heatmap creator, custom heatmaps, make heatmaps, data visualization, habit tracker, contribution graph, heatmap generator, track data, visual analytics",
-  authors: [{ name: "Heatmaps.fun" }],
-  creator: "Heatmaps.fun",
-  publisher: "Heatmaps.fun",
+  authors: [{ name: "heatmaps.fun" }],
+  creator: "heatmaps.fun",
+  publisher: "heatmaps.fun",
   robots: "index, follow",
   openGraph: {
-    title: "Heatmaps.fun - Create Custom Heatmaps & Track Your Data",
+    title: "heatmaps.fun - Create Custom Heatmaps & Track Your Data",
     description:
       "Free heatmap creator tool. Make custom heatmaps, track daily habits, visualize data patterns with beautiful themes.",
     url: "https://heatmaps.fun",
-    siteName: "Heatmaps.fun",
+    siteName: "heatmaps.fun",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Heatmaps.fun - Custom Heatmap Creator",
+        alt: "heatmaps.fun - Custom Heatmap Creator",
       },
     ],
     locale: "en_US",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Heatmaps.fun - Create Custom Heatmaps & Track Your Data",
+    title: "heatmaps.fun - Create Custom Heatmaps & Track Your Data",
     description: "Free heatmap creator tool. Make custom heatmaps, track daily habits, visualize data patterns.",
     images: ["/og-image.png"],
   },
@@ -73,7 +73,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebApplication",
-              name: "Heatmaps.fun",
+              name: "heatmaps.fun",
               description: "Free heatmap creator tool for tracking data and creating custom visualizations",
               url: "https://heatmaps.fun",
               applicationCategory: "DataVisualization",
