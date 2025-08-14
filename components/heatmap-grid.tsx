@@ -102,13 +102,48 @@ export function HeatmapGrid({ heatmapId }: HeatmapGridProps) {
     return null
   }
 
+  const ensureDataIncludesToday = (currentData: DayData[]): DayData[] => {
+    const today = getTodayDate()
+    const hasToday = currentData.some((day) => day.date === today)
+
+    if (hasToday) {
+      return currentData
+    }
+
+    // If today is not in the data, we need to update the date range
+    console.log("Today not found in data, updating date range")
+    const newData: DayData[] = []
+    const todayDate = new Date()
+
+    for (let i = 153; i >= 0; i--) {
+      const date = new Date(todayDate)
+      date.setDate(date.getDate() - i)
+      const dateStr = date.toISOString().split("T")[0]
+
+      // Try to find existing data for this date
+      const existingDay = currentData.find((day) => day.date === dateStr)
+      newData.push({
+        date: dateStr,
+        value: existingDay?.value || 0,
+      })
+    }
+
+    return newData
+  }
+
   useEffect(() => {
     const savedData = loadFromStorage()
     const savedTheme = loadThemeFromStorage()
     setTheme(savedTheme)
 
     if (savedData && savedData.length === 154) {
-      setData(savedData)
+      const updatedData = ensureDataIncludesToday(savedData)
+      setData(updatedData)
+
+      // Save the updated data if it changed
+      if (updatedData !== savedData) {
+        saveToStorage(updatedData)
+      }
     } else {
       // Create empty data (all zeros)
       const today = new Date()
@@ -127,6 +162,21 @@ export function HeatmapGrid({ heatmapId }: HeatmapGridProps) {
       saveToStorage(days) // Save initial empty data to localStorage
     }
   }, [heatmapId])
+
+  useEffect(() => {
+    const handleFocus = () => {
+      setData((currentData) => {
+        const updatedData = ensureDataIncludesToday(currentData)
+        if (updatedData !== currentData) {
+          saveToStorage(updatedData)
+        }
+        return updatedData
+      })
+    }
+
+    window.addEventListener("focus", handleFocus)
+    return () => window.removeEventListener("focus", handleFocus)
+  }, [])
 
   const getTodayDate = () => {
     return new Date().toISOString().split("T")[0]
